@@ -1,9 +1,7 @@
 import React from "react"
 
 const UpdatesPage = () => {
-    return <div>
-        <p1> This is Updates Page </p1>
-    </div>
+    return <span> This is Updates Page </span>
 }
 
 export default UpdatesPage
