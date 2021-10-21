@@ -1,53 +1,22 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
-import SwipeableViews from 'react-swipeable-views';
+import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
-import Playground from '../Playground';
-import News from "../News";
 
 import mme_logo from '../Images/mme_logo.png';
 
+import { makeStyles } from '@mui/styles';
 
-//import { makeStyles } from '@mui/material/styles';
+const useStyles = makeStyles((theme) => ({
+    menuLogo: {
+        margin: '5px 20px 5px',
+        width: '300px'
+    }
 
-// const styles = makeStyles((meTheme) => {
-
-// })
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
+}));
 
 // Nor used Yet 
 function a11yProps(index) {
@@ -58,17 +27,27 @@ function a11yProps(index) {
 }
 
 export default function FullWidthTabs() {
-    const theme = useTheme();
+    const history = useHistory();
+    const pageChange = useCallback((np) => history.push(np), [history])
     const [value, setValue] = React.useState(0);
-
+    const classes = useStyles();
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        console.log(value);
+        function chosePage(num) {
+            switch (num) {
+                case 0: return '/news';
+                case 1: return '/playground';
+                case 2: return '/playground';
+                case 3: return '/playground';
+                default: return '/playground';
+            }
+        }
+        pageChange(chosePage(newValue));
     };
 
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="sticky" variant="top20">
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -78,9 +57,9 @@ export default function FullWidthTabs() {
                     centered={true}
                     aria-label="full width tabs example"
                 >
-                    <Tab value={value} onClick={() => setValue(0)} icon={<img src={mme_logo} alt='MME LOGO' style={{ margin: '5px 20px 5px', width: '300px' }} />} />
+                    <Tab value={value} onClick={() => { handleChange('logoClick', 0); }} icon={<img src={mme_logo} alt='MME LOGO' className={classes.menuLogo} />} />
                     <Tab value={0} label="News" {...a11yProps(0)} />
-                    <Tab value={1} label="Cards & Staff" {...a11yProps(1)} ></Tab>
+                    <Tab value={1} label={"Cards & Staff"} {...a11yProps(1)} ></Tab>
                     <Tab value={2} label="Downloads" {...a11yProps(2)} />
                     <Tab value={3} label="About Project" {...a11yProps(3)} />
                 </Tabs>
