@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import News from "./News";
 import Playground from './Playground';
 import { Router, Switch, Route } from "react-router-dom";
@@ -7,9 +7,10 @@ import TopBar from './Top';
 import { makeStyles } from '@mui/styles';
 import bckg1 from './Images/bckg/02.jpg';
 
+
 const useStyles = makeStyles((theme) => ({
   pageWrapper: {
-    height: '200vh',
+    height: `calc(200vh)`,
     backgroundImage: `url(${bckg1})`,
     backgroundSize: '100% 100%',
     backgroundRepeat: 'repeat',
@@ -21,7 +22,10 @@ const useStyles = makeStyles((theme) => ({
 const newHistory = createBrowserHistory();
 
 
+
+
 function App() {
+
   const classes = useStyles();
   return <Router history={newHistory}>
     <div className={classes.pageWrapper}>
