@@ -51,6 +51,12 @@ const useStyles = makeStyles((theme) => ({
         bottom: '-50px',
         right: '-22px',
     },
+    dateText: {
+        fontSize: '0.9rem',
+        fontStyle: 'italic',
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
 
     // square: {
     //     '& :nth-child(4)': {
@@ -82,8 +88,6 @@ const News = () => {
     const classes = useStyles();
     const [data, setData] = useState([]);
 
-
-
     useEffect(() => {
         // class newArticle {
         //     constructor(id, date, summary, text, img) {
@@ -93,7 +97,7 @@ const News = () => {
         //         this.text = text;
         //         this.img = img;
         //     }
-        // }
+        // } 
         (async function fetchJson() {
             const jsonFile = await fetch('./news.json', {
                 headers: {
@@ -115,6 +119,7 @@ const News = () => {
                 <div className={classes.upRight}><img src={upRight} alt='corner in ME style' /></div>
                 <div className={classes.bottomRight}><img src={bottomRight} alt='corner in ME style' /></div>
                 <Typography>{e.text}</Typography>
+                <Typography className={classes.dateText}>{e.date}</Typography>
             </div>
         )}
     </div>
@@ -151,7 +156,7 @@ const PaginationRanges = () => {
     return (
         <Stack spacing={2}>
             {/* <Pagination count={11} defaultPage={6} siblingCount={0} /> */}
-            <Pagination classes={{ ul: classes.ul }} count={6} defaultPage={1} color="primary" />
+            <Pagination onClick={() => console.log('Test page click')} classes={{ ul: classes.ul }} count={6} defaultPage={1} color="primary" />
             {/* <Pagination count={11} defaultPage={6} siblingCount={0} boundaryCount={2} /> */}
             {/* <Pagination count={11} defaultPage={6} boundaryCount={2} /> */}
         </Stack>
@@ -162,6 +167,7 @@ const UpdatesPage = () => {
     const classes = useStyles();
     return <div className={classes.pageWrapper}>
         <div className={classes.mainContainer}>
+
             <News />
             <PaginationRanges />
         </div>

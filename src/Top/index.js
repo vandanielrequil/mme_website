@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -11,9 +10,12 @@ import mme_logo from '../Images/mme_logo.png';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
+    appBar: {
+        boxShadow: `0px 2px 13px ${theme.palette.primary.dark}`
+    },
     menuLogo: {
         margin: '5px 20px 5px',
-        width: '300px'
+        width: '300px',
     }
 
 }));
@@ -47,7 +49,7 @@ export default function FullWidthTabs() {
 
     return (
         <>
-            <AppBar position="sticky" variant="top20">
+            <AppBar className={classes.appBar} position="sticky" variant="top20">
                 <Tabs
                     value={value}
                     onChange={handleChange}

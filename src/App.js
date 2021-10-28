@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import News from "./News";
 import Playground from './Playground';
 import { Router, Switch, Route } from "react-router-dom";
@@ -20,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const newHistory = createBrowserHistory();
-
-
-
 
 function App() {
 
