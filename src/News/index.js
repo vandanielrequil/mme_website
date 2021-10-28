@@ -7,8 +7,6 @@ import { makeStyles } from '@mui/styles';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-import newsJson from './news.json';
-
 import upLeft from '../Images/news/up_left.png';
 import upRight from '../Images/news/up_right.png';
 import bottomRight from '../Images/news/bottom_right.png';
@@ -81,40 +79,45 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const News = () => {
-
+    const classes = useStyles();
     const [data, setData] = useState([]);
 
 
-    async function fetchJson() {
-        const jsonFile = await fetch('./news.json', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+
+    useEffect(() => {
+        // class newArticle {
+        //     constructor(id, date, summary, text, img) {
+        //         this.id = id;
+        //         this.date = date;
+        //         this.summary = summary;
+        //         this.text = text;
+        //         this.img = img;
+        //     }
+        // }
+        (async function fetchJson() {
+            const jsonFile = await fetch('./news.json', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
             }
-        }
-        )
-            .then(response => response.json());
-        setData(jsonFile);
-    }
-
-    useEffect(() => { fetchJson() }, []);
-
-    class newArticle {
-        constructor(id, date, summary, text, img) {
-            this.id = id;
-            this.date = date;
-            this.summary = summary;
-            this.text = text;
-            this.img = img;
-        }
-    }
-
-    const newsArray = data.map((e, i) => new newArticle(e.id, e.date, e.summary, e.text, e.img));
+            )
+                .then(response => response.json());
+            const newsArray = jsonFile;//.map((e) => new newArticle(e.id, e.date, e.summary, e.text, e.img));
+            setData(newsArray);
+        })();
+    }, []);
 
     return <div>
-        {newsArray.map(e => <div>{e.Text}</div>)}
+        {data.map(e =>
+            <div key={e.id} className={classes.post}>
+                <div className={classes.upLeft}><img src={upLeft} alt='corner in ME style' /></div>
+                <div className={classes.upRight}><img src={upRight} alt='corner in ME style' /></div>
+                <div className={classes.bottomRight}><img src={bottomRight} alt='corner in ME style' /></div>
+                <Typography>{e.text}</Typography>
+            </div>
+        )}
     </div>
-
 }
 
 function TabPanel(props) {
@@ -159,34 +162,10 @@ const UpdatesPage = () => {
     const classes = useStyles();
     return <div className={classes.pageWrapper}>
         <div className={classes.mainContainer}>
-            <div className={classes.post}>
-                <div className={classes.upLeft}><img src={upLeft} alt='corner in ME style' /></div>
-                <div className={classes.upRight}><img src={upRight} alt='corner in ME style' /></div>
-                <div className={classes.bottomRight}><img src={bottomRight} alt='corner in ME style' /></div>
-                <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla </Typography>
-            </div>
-            <div className={classes.post}>
-                <div className={classes.upLeft}><img src={upLeft} alt='corner in ME style' /></div>
-                <div className={classes.upRight}><img src={upRight} alt='corner in ME style' /></div>
-                <div className={classes.bottomRight}><img src={bottomRight} alt='corner in ME style' /></div>
-                <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla </Typography>
-            </div>
-            <div className={classes.post}>
-                <div className={classes.upLeft}><img src={upLeft} alt='corner in ME style' /></div>
-                <div className={classes.upRight}><img src={upRight} alt='corner in ME style' /></div>
-                <div className={classes.bottomRight}><img src={bottomRight} alt='corner in ME style' /></div>
-                <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla </Typography>
-            </div>
-            <div className={classes.post}>
-                <div className={classes.upLeft}><img src={upLeft} alt='corner in ME style' /></div>
-                <div className={classes.upRight}><img src={upRight} alt='corner in ME style' /></div>
-                <div className={classes.bottomRight}><img src={bottomRight} alt='corner in ME style' /></div>
-                <Typography>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo quo possimus in reprehenderit id laudantium? Laudantium, quos! Nobis fugit cum voluptate illo magni dolores, numquam unde ducimus omnis iste dolorem aspernatur fuga nostrum delectus, at sit animi? Ea iusto itaque asperiores labore mollitia aspernatur, perferendis nam inventore, aliquam autem consequuntur eum voluptas amet quidem illo a quasi quia, blanditiis quibusdam fugiat beatae molestias pariatur? Sint, neque fugit culpa adipisci dolorem similique iste dolore harum optio nulla molestias deserunt laborum nemo nisi non qui fugiat corrupti necessitatibus eligendi! Sunt id alias obcaecati, dolor excepturi modi nulla </Typography>
-            </div>
             <News />
             <PaginationRanges />
         </div>
     </div>
 }
 
-export default UpdatesPage
+export default UpdatesPage;
