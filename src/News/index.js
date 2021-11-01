@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
+import { initialLoad } from '../Store/newsSlice';
+import { useDispatch, useSelector } from "react-redux";
+
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { makeStyles } from '@mui/styles';
@@ -87,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
 const News = () => {
     const classes = useStyles();
     const [data, setData] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // class newArticle {
@@ -109,7 +113,9 @@ const News = () => {
                 .then(response => response.json());
             const newsArray = jsonFile;//.map((e) => new newArticle(e.id, e.date, e.summary, e.text, e.img));
             setData(newsArray);
+            dispatch(initialLoad(newsArray));
         })();
+
     }, []);
 
     return <div>
