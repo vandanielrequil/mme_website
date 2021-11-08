@@ -22,14 +22,14 @@ const useStyles = makeStyles((theme) => ({
 const newHistory = createBrowserHistory();
 
 function App() {
-
   const classes = useStyles();
   return <Router history={newHistory}>
     <div className={classes.pageWrapper}>
       <TopBar />
       <Switch>
+        <Route path="/news/:id" children={<News />} />
         <Route path="/playground"><Playground /></Route>
-        <Route path="/news"><News /></Route>
+        {/* <Route path="/news"><News /></Route> */}
         <Route path="/"><News /></Route>
       </Switch>
     </div>

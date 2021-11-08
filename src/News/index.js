@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from 'prop-types';
+
+import { useParams, useHistory } from 'react-router-dom';
 
 import { initialLoad } from '../Store/newsSlice';
 import { useDispatch, useSelector } from "react-redux";
@@ -87,11 +89,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const News = () => {
+const NewsData = () => {
     const classes = useStyles();
     const [data, setData] = useState([]);
     const dispatch = useDispatch();
-
     useEffect(() => {
         // class newArticle {
         //     constructor(id, date, summary, text, img) {
@@ -103,7 +104,7 @@ const News = () => {
         //     }
         // } 
         (async function fetchJson() {
-            const jsonFile = await fetch('./news.json', {
+            const jsonFile = await fetch('../news.json', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -111,7 +112,7 @@ const News = () => {
             }
             )
                 .then(response => response.json());
-            const newsArray = jsonFile;//.map((e) => new newArticle(e.id, e.date, e.summary, e.text, e.img));
+            const newsArray = jsonFile.reverse();//.map((e) => new newArticle(e.id, e.date, e.summary, e.text, e.img));
             setData(newsArray);
             dispatch(initialLoad(newsArray));
         })();
@@ -131,53 +132,70 @@ const News = () => {
     </div>
 }
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+// function TabPanel(props) {
+//     const { children, value, index, ...other } = props;
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+//     return (
+//         <div
+//             role="tabpanel"
+//             hidden={value !== index}
+//             id={`full-width-tabpanel-${index}`}
+//             aria-labelledby={`full-width-tab-${index}`}
+//             {...other}
+//         >
+//             {value === index && (
+//                 <Box sx={{ p: 3 }}>
+//                     <Typography>{children}</Typography>
+//                 </Box>
+//             )}
+//         </div>
+//     );
+// }
 
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
+// TabPanel.propTypes = {
+//     children: PropTypes.node,
+//     index: PropTypes.number.isRequired,
+//     value: PropTypes.number.isRequired,
+// };
 
 const PaginationRanges = () => {
     const classes = useStyles();
+    const history = useHistory();
+
+    let { id } = useParams();
+    const [pageId, setPageId] = useState(id);
+    useEffect(() => {
+        console.log(history);
+        console.log(pageId);
+    }, [pageId, history]);
+
+
+    //const pageChange = useCallback((np) => history.push(np), [history]);
+    const pageChange = (np) => history.push(np);
+    function switchNewsPage(id) {
+        if (id !== pageId) {
+            setPageId(id);
+            pageChange('news/' + id);
+        }
+    }
+
+
     return (
         <Stack spacing={2}>
-            {/* <Pagination count={11} defaultPage={6} siblingCount={0} /> */}
-            <Pagination onClick={() => console.log('Test page click')} classes={{ ul: classes.ul }} count={6} defaultPage={1} color="primary" />
-            {/* <Pagination count={11} defaultPage={6} siblingCount={0} boundaryCount={2} /> */}
-            {/* <Pagination count={11} defaultPage={6} boundaryCount={2} /> */}
+            <Pagination onClick={() => switchNewsPage(2)} classes={{ ul: classes.ul }} count={6} defaultPage={1} color="primary" />
         </Stack>
     );
 }
 
-const UpdatesPage = () => {
+const News = () => {
     const classes = useStyles();
     return <div className={classes.pageWrapper}>
         <div className={classes.mainContainer}>
 
-            <News />
+            <NewsData />
             <PaginationRanges />
         </div>
     </div>
 }
 
-export default UpdatesPage;
+export default News;
