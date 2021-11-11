@@ -8,6 +8,9 @@ const newsSlice = createSlice({
             newsArray: [],
             newsNumber: 0
         },
+        page: {
+            curPgNum: 1,
+        },
         value: 0
     },
     reducers: {
@@ -21,10 +24,13 @@ const newsSlice = createSlice({
         initialLoad: (state, action) => {
             state.news.newsArray = action.payload;
             state.news.newsNumber = action.payload.length;
+        },
+        currentNewsPage: (state, action) => {
+            state.page.curPgNum = action.payload;
         }
     }
 })
 
-export const { incremented, initialLoad } = newsSlice.actions;
+export const { incremented, initialLoad, currentNewsPage } = newsSlice.actions;
 
 export default newsSlice.reducer;
