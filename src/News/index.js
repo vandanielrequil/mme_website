@@ -115,8 +115,8 @@ const PaginationRanges = () => {
         let pageWithoutId = pathname.replace(reg, '$1');
         setPageId(id);
         history.push(pageWithoutId + '/' + id);
-        console.log(id);
         dispatch(currentNewsPage(id));
+        window.scrollTo(0, 0);
     }
 
 
@@ -134,15 +134,7 @@ const NewsData = () => {
     const dispatch = useDispatch();
     const currPage = useSelector(state => state.page.curPgNum);
 
-    let { id: pageInitId } = useParams();
-    const [pageId, setPageId] = useState(pageInitId);
-    // useEffect(() => {
-    //     console.log('pageInitId  ' + pageInitId);
-    //     console.log('pageId  ' + pageId);
-    // }, [pageInitId, pageId]);
-
     useEffect(() => {
-        console.log('pageeeeeeeeeeeeeeee ' + currPage);
         fetch('../news.json', {
             headers: {
                 'Content-Type': 'application/json',

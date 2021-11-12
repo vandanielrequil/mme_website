@@ -31,8 +31,19 @@ function a11yProps(index) {
 export default function FullWidthTabs() {
     const history = useHistory();
     const pageChange = useCallback((np) => history.push(np), [history])
-    const [value, setValue] = React.useState(0);
+    const { location: { pathname } } = history;
     const classes = useStyles();
+
+    const reg = /\/(\w+)(\/\d+)?/;
+    let curPgId, pageWithoutId = pathname.replace(reg, '$1');
+    switch (pageWithoutId) {
+        case 'news': curPgId = 0; break;
+        case 'playground': curPgId = 1; break;
+        default: curPgId = 0;
+    }
+
+    const [value, setValue] = React.useState(curPgId);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
         function chosePage(num) {
