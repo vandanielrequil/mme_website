@@ -1,7 +1,7 @@
 import React from 'react';
 import News from "./News";
 import Playground from './Playground';
-import { Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
 import { createBrowserHistory } from 'history'
 import TopBar from './Top';
 import { makeStyles } from '@mui/styles';
@@ -10,7 +10,7 @@ import bckg1 from './Images/bckg/02.jpg';
 
 const useStyles = makeStyles((theme) => ({
   pageWrapper: {
-    height: `calc(200vh)`,
+    height: `200vh`,
     backgroundImage: `url(${bckg1})`,
     backgroundSize: '100% 100%',
     backgroundRepeat: 'repeat',
@@ -30,7 +30,7 @@ function App() {
         <Route path="/news/:id" children={<News />} />
         <Route path="/playground"><Playground /></Route>
         {/* <Route path="/news"><News /></Route> */}
-        <Route path="/"><News /></Route>
+        <Route path="/"><Redirect to="/news" /><News /></Route>
       </Switch>
     </div>
   </Router>
