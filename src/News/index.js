@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     pageWrapper: {
         margin: '0 auto',
         width: '100%',
-        height: '100vh',
         opacity: '0.999',
     },
     mainContainer: {
