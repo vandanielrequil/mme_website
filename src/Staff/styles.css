@@ -1,0 +1,8 @@
+.MuiMenu-list {
+    min-width: 146px;
+    /* color: aqua; */
+}
+
+.MuiMenu-paper {
+    border-radius: 0px !important;
+}
