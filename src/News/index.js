@@ -118,8 +118,6 @@ const PaginationRanges = () => {
         window.scrollTo(0, 0);
     }
 
-
-
     return (
         <Stack spacing={2}>
             <Pagination onClick={(e) => switchNewsPage(e.target.textContent)} classes={{ ul: classes.ul }} count={Math.ceil(newsNumber / 4)} page={nvl1Num(pageId)} color="primary" />
@@ -147,7 +145,7 @@ const NewsData = () => {
             .then(r => { setData(r.slice(currPage * 4 - 4, currPage * 4)) })
     }, [currPage]);
 
-    return <div>
+    return <React.Fragment>
         {data.map(e =>
             <div key={e.id} className={classes.post}>
                 <div className={classes.upLeft}><img src={upLeft} alt='corner in ME style' /></div>
@@ -157,7 +155,7 @@ const NewsData = () => {
                 <Typography className={classes.dateText}>{e.date}</Typography>
             </div>
         )}
-    </div>
+    </React.Fragment>
 }
 
 // function TabPanel(props) {
