@@ -13,11 +13,11 @@ const Playground = () => {
         dispatch(incremented());
     }
 
-    return <div>
+    return <React.Fragment>
         <button onClick={() => console.log(value)} style={{ 'marginTop': '100px' }}> Console Log value </button>
         <button onClick={() => disV()} style={{ 'marginTop': '100px' }}> Dispatch value </button>
         <button onClick={() => console.log(news)}>  Console Log news </button>
-    </div>
+    </React.Fragment>
 }
 
 export default Playground;
