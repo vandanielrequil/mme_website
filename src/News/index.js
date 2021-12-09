@@ -1,20 +1,19 @@
 import React, { useState, useEffect/*, useCallback */ } from "react";
 //import PropTypes from 'prop-types';
 
-import { useParams, useHistory } from 'react-router-dom';
-
-import { initialLoad, currentNewsPage } from '../Store/newsSlice';
+import { initialLoad, currentPage } from '../Store/newsSlice';
 import { useDispatch, useSelector } from "react-redux";
 
 import Typography from '@mui/material/Typography';
 //import Box from '@mui/material/Box';
 import { makeStyles } from '@mui/styles';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+
 
 import upLeft from '../Images/news/up_left.png';
 import upRight from '../Images/news/up_right.png';
 import bottomRight from '../Images/news/bottom_right.png';
+
+import PaginationRanges from '../Modules/PaginationRanges.js';
 
 const useStyles = makeStyles((theme) => ({
     pageWrapper: {
@@ -87,49 +86,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const PaginationRanges = () => {
-    const classes = useStyles();
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const newsNumber = useSelector(state => state.news.newsNumber);
-
-    const { location: { pathname } } = history;
-    const { id: pageInitId } = useParams();
-    const [pageId, setPageId] = useState(pageInitId);
-
-    function nvl1Num(pageId) {
-        let dp = (isNaN(parseInt(pageId))) ? 1 : parseInt(pageId);
-        return dp;
-    }
-
-    useEffect(() => {
-        dispatch(currentNewsPage(nvl1Num(pageId)));
-        // console.log(pathname);
-        // console.log('pageInitId  ' + pageId);
-        //console.log('pageId  ' + pageId);
-    }, []);
-
-    function switchNewsPage(id) {
-        let reg = /(\/\w+)(\/\d+)?/;
-        let pageWithoutId = pathname.replace(reg, '$1');
-        setPageId(id);
-        history.push(pageWithoutId + '/' + id);
-        dispatch(currentNewsPage(id));
-        window.scrollTo(0, 0);
-    }
-
-    return (
-        <Stack spacing={2}>
-            <Pagination onClick={(e) => switchNewsPage(e.target.textContent)} classes={{ ul: classes.ul }} count={Math.ceil(newsNumber / 4)} page={nvl1Num(pageId)} color="primary" />
-        </Stack>
-    );
-}
-
 const NewsData = () => {
     const classes = useStyles();
     const [data, setData] = useState([]);
     const dispatch = useDispatch();
-    const currPage = useSelector(state => state.page.curPgNum);
+    const currPage = useSelector(state => state.newsReducer.newsPage.curPgNum);
 
     useEffect(() => {
         fetch('../news.json', {
@@ -157,40 +118,14 @@ const NewsData = () => {
         )}
     </React.Fragment>
 }
-
-// function TabPanel(props) {
-//     const { children, value, index, ...other } = props;
-
-//     return (
-//         <div
-//             role="tabpanel"
-//             hidden={value !== index}
-//             id={`full-width-tabpanel-${index}`}
-//             aria-labelledby={`full-width-tab-${index}`}
-//             {...other}
-//         >
-//             {value === index && (
-//                 <Box sx={{ p: 3 }}>
-//                     <Typography>{children}</Typography>
-//                 </Box>
-//             )}
-//         </div>
-//     );
-// }
-
-// TabPanel.propTypes = {
-//     children: PropTypes.node,
-//     index: PropTypes.number.isRequired,
-//     value: PropTypes.number.isRequired,
-// };
-
 const News = () => {
+    const objectAmount = useSelector(state => state.newsReducer.news.amount);
     const classes = useStyles();
     return <div className={classes.pageWrapper}>
         <div className={classes.mainContainer}>
 
             <NewsData />
-            <PaginationRanges />
+            <PaginationRanges params={{ currentPage, objectAmount, objectsPerPage: 4 }} />
         </div>
     </div>
 }

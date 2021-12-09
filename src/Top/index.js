@@ -14,7 +14,7 @@ import mme_logo from '../Images/mme_logo.png';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
-        boxShadow: `0px 2px 13px ${theme.palette.primary.dark}`
+        boxShadow: `0px 1px 3px ${theme.palette.primary.dark}`
     },
     menuLogo: {
         margin: '5px 20px 5px',
