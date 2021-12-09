@@ -11,12 +11,16 @@ import bckg1 from './Images/bckg/02.jpg';
 
 const useStyles = makeStyles((theme) => ({
   pageWrapper: {
+    '& :before': {
+      backgroundColor: 'red' //'rgba(35, 73, 104, 0.5)',
+    },
     height: '100vh',
     flexDirection: 'column',
     background: `url(${bckg1}) no-repeat fixed`, //center top
-    opacity: '0.999',
+    //backgroundColor: `${theme.palette.secondary.dark}`, //center top
     overflowY: 'scroll'
-  }
+  },
+
 }));
 
 const newHistory = createBrowserHistory();
