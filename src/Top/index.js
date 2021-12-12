@@ -80,7 +80,7 @@ export default function FullWidthTabs() {
     function subMenuPageClick(num) {
         function path(num) {
             switch (num) {
-                case 0: return '/Doors';
+                case 0: return '/Doors/1';
                 case 1: return '/Treasures';
                 case 2: return '/Locations';
                 case 3: return '/Classes';
