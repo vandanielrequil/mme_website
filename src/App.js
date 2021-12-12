@@ -34,7 +34,7 @@ function App() {
         <Route path="/news/:id" children={<News />} />
         <Route path="/playground" children={<Playground />} />
         <Route path="/staff" children={<Staff />} />
-        <Route path="/doors" children={<Doors />} />
+        <Route path="/doors/:id" children={<Doors />} />
         <Route path="/"><Redirect to="/news" /><News /></Route>
       </Switch>
     </div>
